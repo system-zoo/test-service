@@ -50,7 +50,11 @@ trait TestService extends HttpService with LazyLogging {
       path(IntNumber) { value =>
         detach() {
           delay()
-          complete(code(), returnValue(value).toString)
+          val returnCode = code()
+          if(returnCode.intValue == 200)
+            complete(code(), returnValue(value).toString)
+          else
+            complete(code(), "")
         }
       }
     }
