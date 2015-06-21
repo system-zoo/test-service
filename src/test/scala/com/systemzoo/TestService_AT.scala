@@ -55,7 +55,7 @@ class TestService_AT extends FunSpec with ScalatestRouteTest with ShouldMatchers
       val int = Random.nextInt(1000)
       Get(s"/$int") ~> route ~> check {
         assert(response.status === StatusCodes.InternalServerError)
-        assert(response.entity.data.asString.toInt === int + 1)
+        assert(response.entity.data.asString === "")
       }
     }
   }

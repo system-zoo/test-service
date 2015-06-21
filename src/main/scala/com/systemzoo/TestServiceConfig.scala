@@ -11,5 +11,7 @@ object TestServiceConfig {
   private lazy val latency          = defaultconfig.getInt("latency")
   private lazy val failRate         = defaultconfig.getDouble("fail-rate")
   private lazy val badResponseRate  = defaultconfig.getDouble("badresponse-rate")
+
+  lazy val serviceName              = defaultconfig.getString("serviceName")
 }
 

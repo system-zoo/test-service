@@ -1,5 +1,8 @@
 package com.systemzoo
 
+import java.text.{SimpleDateFormat, DateFormat}
+import java.util.{Date, TimeZone}
+
 import akka.actor.ActorSystem
 import com.typesafe.scalalogging.slf4j.LazyLogging
 import spray.http.{StatusCode, StatusCodes}
@@ -28,13 +31,17 @@ trait TestService extends HttpService with LazyLogging {
     val startTime = System.currentTimeMillis()
     ctx.withHttpResponseMapped { response ⇒
       val runTime = System.currentTimeMillis() - startTime
-      if(ctx.request.uri.path.tail.toString() == "")
-        logger.info(s"""{"code":${response.status.intValue},"duration":$runTime}""")
-      else
-        logger.info(s"""{"code":${response.status.intValue},"duration":$runTime, "request":${ctx.request.uri.path.tail}, "response":${response.entity.data.asString}}""")
 
+      logger.info(s"""{"time":"$currentTime", "service":"${TestServiceConfig.serviceName}", code":${response.status.intValue},"duration":$runTime, "request":"${ctx.request.uri.path.tail}", "response":"${response.entity.data.asString}"}""")
       response
     }
+  }
+
+  def currentTime = {
+    val timeZone = TimeZone.getTimeZone("UTC")
+    val dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss,sss")
+    dateFormat.setTimeZone(timeZone)
+    dateFormat.format(new Date())
   }
 
   def simpleGet(implicit ec: ExecutionContext) =
