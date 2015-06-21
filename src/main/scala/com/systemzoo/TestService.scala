@@ -15,7 +15,7 @@ trait TestService extends HttpService with LazyLogging {
   protected implicit def executionContext = actorRefFactory.dispatcher
 
   def delay() = {
-    Thread.sleep(Random.nextInt(config.latency))
+    if(config.latency != 0) Thread.sleep(Random.nextInt(config.latency))
   }
 
   def code(): StatusCode =
