@@ -32,7 +32,7 @@ trait TestService extends HttpService with LazyLogging {
     ctx.withHttpResponseMapped { response ⇒
       val runTime = System.currentTimeMillis() - startTime
 
-      logger.info(s"""{"time":"$currentTime", "service":"${TestServiceConfig.serviceName}", code":${response.status.intValue},"duration":$runTime, "request":"${ctx.request.uri.path.tail}", "response":"${response.entity.data.asString}"}""")
+      logger.info(s"""{"time":"$currentTime", "service":"${TestServiceConfig.serviceName}", "code":${response.status.intValue},"duration":$runTime, "request":"${ctx.request.uri.path.tail}", "response":"${response.entity.data.asString}"}""")
       response
     }
   }
